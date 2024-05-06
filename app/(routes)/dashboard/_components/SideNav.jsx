@@ -41,7 +41,7 @@ function SideNav() {
 
   return (
     <div className="h-screen p-10">
-      <Image src={"/logo.svg"} alt="Logo" width={160} height={100} onClick={() => router.push('/')} className={"cursor-pointer"}/>
+      <Image src={"/logo.svg"} alt="Logo" width={160} height={100} onClick={() => router.replace('/')} className={"cursor-pointer"}/>
       <div className="mt-5">
         {menuList.map((menu, index) => (
           <Link key={index} href={menu.path}>

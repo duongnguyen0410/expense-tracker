@@ -3,7 +3,7 @@ import React from "react";
 
 function DashboardHeader() {
   return (
-    <div className="p-10 shadow-sm border-b flex justify-between items-center">
+    <div className="h-[100px] px-10 shadow-sm border-b flex justify-between items-center">
       <div></div>
       <div>
         <UserButton

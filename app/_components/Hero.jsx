@@ -36,7 +36,7 @@ function Hero() {
                 alt="dashboard"
                 width={900}
                 height={600}
-                className="-mt-9 rounded-xl border-2"
+                className="-mt-9 mb-9 rounded-xl border-2"
             />
         </section>
     )

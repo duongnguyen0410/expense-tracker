@@ -7,11 +7,14 @@ import db from "@/utils/dbConfig";
 import { desc, eq, getTableColumns, sql } from "drizzle-orm";
 import { Budgets, Expenses } from "@/utils/schema";
 import BarChartDashboard from "./_components/BarChartDashboard";
+import BudgetItem from "@/app/(routes)/dashboard/budgets/_components/BudgetItem";
+import ExpenseListTable from "@/app/(routes)/dashboard/expenses/_components/ExpenseListTable";
 
 function Dashboard() {
   const { user } = useUser();
 
   const [budgetList, setBudgetList] = useState([]);
+  const [expenseList, setExpenseList] = useState([]);
 
   useEffect(() => {
     user && getBudgetList();
@@ -33,6 +36,26 @@ function Dashboard() {
     if (result) {
       console.log(result);
       setBudgetList(result);
+      getExpenseList();
+    }
+  };
+
+  const getExpenseList = async () => {
+    const result = await db
+      .select({
+        id: Expenses.id,
+        name: Expenses.name,
+        amount: Expenses.amount,
+        createdAt: Expenses.createdAt,
+      })
+      .from(Budgets)
+      .rightJoin(Expenses, eq(Budgets.id, Expenses.budgetId))
+      .where(eq(Budgets.createdBy, user?.primaryEmailAddress?.emailAddress))
+      .orderBy(desc(Expenses.id));
+
+    if (result) {
+      console.log(result);
+      setExpenseList(result);
     }
   };
 
@@ -45,10 +68,22 @@ function Dashboard() {
 
       <CardInfo budgetList={budgetList} />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6">
-        <div className="md:col-span-2">
+        <div className="lg:col-span-2">
           <BarChartDashboard budgetList={budgetList} />
+          <ExpenseListTable
+            expenseList={expenseList}
+            refreshBudget={getBudgetList}
+            refreshExpenseTable={getExpenseList}
+          />
         </div>
-        <div>Other Content</div>
+        <div>
+          <h2 className="font-bold text-lg mb-3">Latest Budgets</h2>
+          <div className="grid gap-5">
+            {budgetList.map((budget) => (
+              <BudgetItem key={budget.id} budget={budget} />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

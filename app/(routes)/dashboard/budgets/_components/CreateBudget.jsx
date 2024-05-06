@@ -40,6 +40,8 @@ function CreateBudget({ refreshData }) {
       .returning({ insertedId: Budgets.id });
 
     if (result) {
+      setBudgetName("");
+      setBudgetAmount("");
       refreshData();
       toast.success("Budget has been created.");
     }
@@ -83,6 +85,7 @@ function CreateBudget({ refreshData }) {
                   <h2 className="text-black font-medium my-1">Budget Name</h2>
                   <Input
                     placeholder="e.g Home Decor"
+                    value={budgetName}
                     onChange={(e) => setBudgetName(e.target.value)}
                   />
                 </div>
@@ -92,6 +95,7 @@ function CreateBudget({ refreshData }) {
                   <Input
                     type="number"
                     placeholder="e.g 5000$"
+                    value={budgetAmount}
                     onChange={(e) => setBudgetAmount(e.target.value)}
                   />
                 </div>

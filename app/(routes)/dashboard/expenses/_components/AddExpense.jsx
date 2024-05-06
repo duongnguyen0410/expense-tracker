@@ -24,6 +24,8 @@ function AddExpense({ budgetId, user, refreshData }) {
     console.log(result);
 
     if (result) {
+      setExpenseName("");
+      setExpenseAmount("");
       toast.success("Expense has been added.");
       setExpenseName("");
       setExpenseAmount("");

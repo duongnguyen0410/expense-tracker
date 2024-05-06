@@ -26,19 +26,21 @@ function ExpenseListTable({ expenseList, refreshBudget, refreshExpenseTable }) {
         <h2 className="font-bold">Name</h2>
         <h2 className="font-bold">Amount</h2>
         <h2 className="font-bold">Date</h2>
-        <h2 className="font-bold">Action</h2>
+        <h2 className="font-bold text-center">Remove</h2>
       </div>
       {expenseList.map((expense) => (
         <div className="grid grid-cols-4 bg-slate-100 p-2 items-center">
           <h2>{expense.name}</h2>
           <h2>{expense.amount}</h2>
           <h2>{expense.createdAt}</h2>
-          <Button
-            className="bg-red-500 hover:bg-red-600 text-white text-sm py-1 px-2 rounded w-8 h-8"
-            onClick={() => deleteExpense(expense)}
-          >
-            <Trash2 size={18} />
-          </Button>
+          <div className="flex justify-center items-center">
+            <Button
+              className="bg-red-500 hover:bg-red-600 text-white text-sm py-1 px-2 rounded w-8 h-8"
+              onClick={() => deleteExpense(expense)}
+            >
+              <Trash2 size={18} />
+            </Button>
+          </div>
         </div>
       ))}
     </div>
